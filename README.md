@@ -5,3 +5,4 @@ Change **./nginx/conf/default.conf** file and test Load balancing strategy.
 python testLoadBalance.py
 ```
 
+Input URL: **localhost** or **localhost/test.jsp** to test.
