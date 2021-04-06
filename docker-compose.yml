@@ -1,7 +1,8 @@
 version: "3"
 services:
   nginx:
-    image: nginx
+    build: ./nginx
+    image: wdf000/loadbalance-nginx
     container_name: loadbalance-nginx
     ports:
       - "8888:80"
@@ -11,22 +12,36 @@ services:
       - tomcat1
       - tomcat2
       - tomcat3
-    
+    networks:
+      - net
+   
   tomcat1:
     image: tomcat
     container_name: loadbalance-tomcat01
+    restart: always
     volumes:
       - ./tomcat01:/usr/local/tomcat/webapps/ROOT
+    networks:
+      - net
 
   tomcat2:
     image: tomcat
     container_name: loadbalance-tomcat02
+    restart: always
     volumes:
       - ./tomcat02:/usr/local/tomcat/webapps/ROOT
+    networks:
+      - net
 
   tomcat3:
     image: tomcat
     container_name: loadbalance-tomcat03
+    restart: always
     volumes:
       - ./tomcat03:/usr/local/tomcat/webapps/ROOT
-  
+    networks:
+      - net
+
+networks:
+  net:
+    driver: bridge
